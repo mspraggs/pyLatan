@@ -79,8 +79,11 @@ def load_hdf5(filename):
         raise IOError("Unknown datatype information. Try loading with "
                       "load_hdf5_legacy, or convert your input file.")
 
-    if datatype in [1, 3]:
+    if datatype == 1:
         return outer_group["data"][()]
 
     elif datatype == 2:
         return _extract_samples(outer_group, num_samples)
+
+    elif datatype == 3:
+        return np.roll(outer_group["data"][()], -1)
